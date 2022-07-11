@@ -105,6 +105,7 @@ pub struct ItemSearchOptions {
     load_data: bool,
     limit: Option<Limit>,
     label: Option<CFString>,
+    desc: Option<CFString>,
     access_group: Option<CFString>,
 }
 
@@ -171,6 +172,13 @@ impl ItemSearchOptions {
         self
     }
 
+    /// Search for an item with the given description.
+    #[inline(always)]
+    pub fn desc(&mut self, desc: &str) -> &mut Self {
+        self.desc = Some(CFString::new(desc));
+        self
+    }
+
     /// Sets kSecAttrAccessGroup to kSecAttrAccessGroupToken
     #[inline(always)]
     pub fn access_group_token(&mut self) -> &mut Self {
@@ -226,6 +234,13 @@ impl ItemSearchOptions {
                 params.push((
                     CFString::wrap_under_get_rule(kSecAttrLabel),
                     label.as_CFType(),
+                ));
+            }
+
+            if let Some(ref desc) = self.desc {
+                params.push((
+                    CFString::wrap_under_get_rule(kSecAttrDescription),
+                    desc.as_CFType(),
                 ));
             }
 

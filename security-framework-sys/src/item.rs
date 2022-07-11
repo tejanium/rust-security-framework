@@ -20,6 +20,7 @@ extern "C" {
 
     pub static kSecAttrKeyType: CFStringRef;
     pub static kSecAttrLabel: CFStringRef;
+    pub static kSecAttrDescription: CFStringRef;
 
     pub static kSecAttrKeySizeInBits: CFStringRef;
 
